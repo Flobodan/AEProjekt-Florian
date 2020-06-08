@@ -21,32 +21,25 @@ public class DBLogin extends javax.swing.JFrame {
         initComponents();
     }
     
+    //Getter Funktionen um die LoginDaten aus den Felder für die anderen Forms benutzen zu können.
     public static String GetUser(){
-        String User = jTextField4.getText();
+        String User = Username.getText();
         return User;
     }
     public static String GetPW(){
-        String PW = jTextField5.getText();
+        String PW = Password.getText();
         return PW;
     }
     
     public static String GetConnectstring(){
-        String IP = jTextField1.getText();
-        String Port = jTextField2.getText();
-        String Database = jTextField3.getText();
+        String IP = IPAdress.getText();
+        String Port = DBPort.getText();
+        String Database = DBName.getText();
         String connectstring = "jdbc:mysql://" + IP+":"+Port +"/"+Database ;
         return connectstring;
     }
             
 
-    
-        /*String IP = jTextField1.getText();
-        String Port = jTextField2.getText();
-        String Database = jTextField3.getText();
-        String User = jTextField4.getText();
-        String Password = jTextField5.getText();
-        String connectstring = "jdbc:mysql://" + IP+":"+Port +"/"+Database ;
-*/
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -56,79 +49,76 @@ public class DBLogin extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jTextField5 = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+        IPAdress = new javax.swing.JTextField();
+        DBPort = new javax.swing.JTextField();
+        DBName = new javax.swing.JTextField();
+        Username = new javax.swing.JTextField();
+        BtnConnect = new javax.swing.JButton();
+        Password = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("AEProjekt Florian Oehr");
 
-        jTextField1.setText("IP Adresse");
-        jTextField1.setToolTipText("");
-        jTextField1.addFocusListener(new java.awt.event.FocusAdapter() {
+        IPAdress.setText("IP Adresse");
+        IPAdress.setToolTipText("");
+        IPAdress.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                jTextField1FocusGained(evt);
+                IPAdressFocusGained(evt);
             }
         });
-        jTextField1.addMouseListener(new java.awt.event.MouseAdapter() {
+        IPAdress.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTextField1MouseClicked(evt);
+                IPAdressMouseClicked(evt);
             }
         });
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        IPAdress.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                IPAdressActionPerformed(evt);
             }
         });
 
-        jTextField2.setText("Port");
-        jTextField2.addFocusListener(new java.awt.event.FocusAdapter() {
+        DBPort.setText("Port");
+        DBPort.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                jTextField2FocusGained(evt);
+                DBPortFocusGained(evt);
             }
         });
 
-        jTextField3.setText("Database");
-        jTextField3.addFocusListener(new java.awt.event.FocusAdapter() {
+        DBName.setText("Database");
+        DBName.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                jTextField3FocusGained(evt);
+                DBNameFocusGained(evt);
             }
         });
 
-        jTextField4.setText("Username");
-        jTextField4.addFocusListener(new java.awt.event.FocusAdapter() {
+        Username.setText("Username");
+        Username.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                jTextField4FocusGained(evt);
+                UsernameFocusGained(evt);
             }
         });
 
-        jButton1.setText("Connect");
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+        BtnConnect.setText("Connect");
+        BtnConnect.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                jButton1MousePressed(evt);
+                BtnConnectMousePressed(evt);
             }
         });
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        BtnConnect.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                BtnConnectActionPerformed(evt);
             }
         });
 
-        jTextField5.setText("Password");
-        jTextField5.addFocusListener(new java.awt.event.FocusAdapter() {
+        Password.setText("Password");
+        Password.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                jTextField5FocusGained(evt);
+                PasswordFocusGained(evt);
             }
         });
-
-        jButton2.setText("Test");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        Password.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                PasswordActionPerformed(evt);
             }
         });
 
@@ -140,19 +130,16 @@ public class DBLogin extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(IPAdress, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(DBPort, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(DBName, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Username, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addGap(31, 31, 31)
-                        .addComponent(jButton2)))
+                        .addComponent(Password, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(BtnConnect))
                 .addContainerGap(155, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -160,23 +147,20 @@ public class DBLogin extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(IPAdress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(DBPort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(DBName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Username, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                .addComponent(BtnConnect)
                 .addContainerGap(232, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
-    private void jButton1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MousePressed
-        // TODO add your handling code here:
+    private void BtnConnectMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnConnectMousePressed
         try{
             Connection cn=db.connector.getConnection(GetConnectstring(),GetUser(),GetPW()); 
             JOptionPane.showMessageDialog(this, "Verbindung erfolgreich!");
@@ -191,56 +175,45 @@ public class DBLogin extends javax.swing.JFrame {
         
         
         
-    }//GEN-LAST:event_jButton1MousePressed
+    }//GEN-LAST:event_BtnConnectMousePressed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void IPAdressActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IPAdressActionPerformed
         // TODO add your handling code here:
         
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_IPAdressActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void BtnConnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnConnectActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_BtnConnectActionPerformed
 
-    private void jTextField1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField1MouseClicked
-        // TODO add your handling code here:
-        jTextField1.setText("");
-    }//GEN-LAST:event_jTextField1MouseClicked
+    private void IPAdressMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_IPAdressMouseClicked
+        IPAdress.setText("");
+    }//GEN-LAST:event_IPAdressMouseClicked
 
-    private void jTextField2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField2FocusGained
-        // TODO add your handling code here:
-        jTextField2.setText("");
-    }//GEN-LAST:event_jTextField2FocusGained
+    private void DBPortFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_DBPortFocusGained
+        DBPort.setText("");
+    }//GEN-LAST:event_DBPortFocusGained
 
-    private void jTextField3FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField3FocusGained
-        // TODO add your handling code here:
-        jTextField3.setText("");
-    }//GEN-LAST:event_jTextField3FocusGained
+    private void DBNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_DBNameFocusGained
+        DBName.setText("");
+    }//GEN-LAST:event_DBNameFocusGained
 
-    private void jTextField4FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField4FocusGained
-        // TODO add your handling code here:
-        jTextField4.setText("");
-    }//GEN-LAST:event_jTextField4FocusGained
+    private void UsernameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_UsernameFocusGained
+        Username.setText("");
+    }//GEN-LAST:event_UsernameFocusGained
 
-    private void jTextField5FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField5FocusGained
-        // TODO add your handling code here:
-        jTextField5.setText("");
-    }//GEN-LAST:event_jTextField5FocusGained
+    private void PasswordFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_PasswordFocusGained
+        Password.setText("");
+    }//GEN-LAST:event_PasswordFocusGained
 
-    private void jTextField1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusGained
+    private void IPAdressFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_IPAdressFocusGained
         // TODO add your handling code here:
 
-    }//GEN-LAST:event_jTextField1FocusGained
+    }//GEN-LAST:event_IPAdressFocusGained
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void PasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PasswordActionPerformed
         // TODO add your handling code here:
-
-        
-
-        UI obj = new UI();
-        obj.setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_PasswordActionPerformed
     
      
     /**
@@ -254,7 +227,7 @@ public class DBLogin extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -279,13 +252,12 @@ public class DBLogin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public javax.swing.JButton jButton1;
-    public javax.swing.JButton jButton2;
-    private static javax.swing.JTextField jTextField1;
-    private static javax.swing.JTextField jTextField2;
-    private static javax.swing.JTextField jTextField3;
-    private static javax.swing.JTextField jTextField4;
-    private static javax.swing.JTextField jTextField5;
+    public javax.swing.JButton BtnConnect;
+    private static javax.swing.JTextField DBName;
+    private static javax.swing.JTextField DBPort;
+    private static javax.swing.JTextField IPAdress;
+    private static javax.swing.JTextField Password;
+    private static javax.swing.JTextField Username;
     // End of variables declaration//GEN-END:variables
 
 }

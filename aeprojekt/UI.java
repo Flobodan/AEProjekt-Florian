@@ -11,7 +11,6 @@ import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.sql.Statement;
 import java.sql.ResultSet;
-import aeprojekt.DBLogin;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -29,6 +28,8 @@ public class UI extends javax.swing.JFrame {
     public UI() {
         initComponents();
     }
+    
+    //Erstellt eine Maplist für die Tabelle mit den Daten aus der Datenbank
     public ArrayList<Lehrer> mapList(){
         ArrayList<Lehrer> mapList = new ArrayList<>();
         try{
@@ -42,22 +43,54 @@ public class UI extends javax.swing.JFrame {
                 mapList.add(Lehrer);
                 
             }
+            
         }
         catch(Exception e){
             JOptionPane.showMessageDialog(this, e);
         }
         return mapList;
     }
-        public void show_lehrer(){
+    //Füllt die Tabelle mit den Daten aus der Maplist
+    public void show_lehrer(){
         ArrayList<Lehrer> list = mapList();
-        DefaultTableModel model = (DefaultTableModel)maptable.getModel();
+        DefaultTableModel model = (DefaultTableModel)TableLehrer.getModel();
         Object[] row = new Object[3];
+        if (model.getRowCount() > 0) {
+            for (int i = model.getRowCount() - 1; i > -1; i--) {
+                model.removeRow(i);
+            }
+        }
         for(int i=0;i<list.size();i++)
         {
             row[0]=list.get(i).getVorname();
             row[1]=list.get(i).getNachname();
             row[2]=list.get(i).getEmail();
             model.addRow(row);
+        }
+    }
+    
+    //Funktion um die ausgewählte Zeile in der Tabelle zu entfernen
+    public void removeSelectedRows(){
+        DefaultTableModel model = (DefaultTableModel) this.TableLehrer.getModel();
+        int[] rows = TableLehrer.getSelectedRows();
+        for(int i=0;i<rows.length;i++){
+            model.removeRow(rows[i]-i);
+        
+        } 
+    }
+    //Funktion um die ausgewählte Zeile in der Datenbank zu entfernen   
+    public void removeSelectedRowsFromDB(){
+        DefaultTableModel model = (DefaultTableModel) TableLehrer.getModel();
+        int row = TableLehrer.getSelectedRow();
+        String AusgewählteEmail = (String) TableLehrer.getModel().getValueAt(row, 2);
+        try {
+            Connection cn=db.connector.getConnection(aeprojekt.DBLogin.GetConnectstring(),aeprojekt.DBLogin.GetUser(),aeprojekt.DBLogin.GetPW());
+            String query1="DELETE FROM lehrer WHERE Email='"+AusgewählteEmail+"'";
+            Statement st=cn.prepareStatement(query1);
+            st.executeUpdate(query1);
+            JOptionPane.showMessageDialog(null,  "Der Eintrag wurde erfolgreich gelöscht!");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,  e.getMessage());
         }
     }
             
@@ -73,7 +106,12 @@ public class UI extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        maptable = new javax.swing.JTable();
+        TableLehrer = new javax.swing.JTable();
+        AddVorname = new javax.swing.JTextField();
+        AddNachname = new javax.swing.JTextField();
+        AddEmail = new javax.swing.JTextField();
+        BtnAddLehrer = new javax.swing.JButton();
+        BtnDeleteEntry = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("AEProjekt Florian Oehr");
@@ -101,10 +139,10 @@ public class UI extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(298, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        maptable.setModel(new javax.swing.table.DefaultTableModel(
+        TableLehrer.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -120,7 +158,37 @@ public class UI extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(maptable);
+        jScrollPane1.setViewportView(TableLehrer);
+
+        AddVorname.setText("Vorname");
+
+        AddNachname.setText("Nachname");
+        AddNachname.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AddNachnameActionPerformed(evt);
+            }
+        });
+
+        AddEmail.setText("Email");
+        AddEmail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AddEmailActionPerformed(evt);
+            }
+        });
+
+        BtnAddLehrer.setText("Neuen Lehrer hinzufügen");
+        BtnAddLehrer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnAddLehrerActionPerformed(evt);
+            }
+        });
+
+        BtnDeleteEntry.setText("Eintrag löschen");
+        BtnDeleteEntry.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnDeleteEntryActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -129,23 +197,71 @@ public class UI extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 689, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(AddVorname, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(AddNachname, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(AddEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(BtnAddLehrer, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(BtnDeleteEntry, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(AddVorname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(AddNachname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(AddEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BtnAddLehrer)
+                    .addComponent(BtnDeleteEntry))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
         show_lehrer();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void AddNachnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddNachnameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_AddNachnameActionPerformed
+
+    private void AddEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddEmailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_AddEmailActionPerformed
+
+    private void BtnAddLehrerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnAddLehrerActionPerformed
+        try{
+            Connection cn=db.connector.getConnection(aeprojekt.DBLogin.GetConnectstring(),aeprojekt.DBLogin.GetUser(),aeprojekt.DBLogin.GetPW());
+            String sql="insert into lehrer(Vorname,Nachname,Email) values(?,?,?)";
+            PreparedStatement ps=cn.prepareStatement(sql);
+            ps.setString(1, AddVorname.getText());
+            ps.setString(2, AddNachname.getText());
+            ps.setString(3, AddEmail.getText());
+            ps.executeUpdate();
+        }
+        catch(Exception e)
+        {
+            JOptionPane.showMessageDialog(this, e);
+        }
+    }//GEN-LAST:event_BtnAddLehrerActionPerformed
+
+    private void BtnDeleteEntryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnDeleteEntryActionPerformed
+        removeSelectedRowsFromDB();
+        removeSelectedRows();
+    }//GEN-LAST:event_BtnDeleteEntryActionPerformed
 
     /**
      * @param args the command line arguments
@@ -184,9 +300,14 @@ public class UI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField AddEmail;
+    private javax.swing.JTextField AddNachname;
+    private javax.swing.JTextField AddVorname;
+    private javax.swing.JButton BtnAddLehrer;
+    private javax.swing.JButton BtnDeleteEntry;
+    private javax.swing.JTable TableLehrer;
     private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable maptable;
     // End of variables declaration//GEN-END:variables
 }
