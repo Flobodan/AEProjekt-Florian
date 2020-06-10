@@ -30,10 +30,10 @@ public class UI extends javax.swing.JFrame {
     }
     
     //Erstellt eine Maplist für die Tabelle mit den Daten aus der Datenbank
-    public ArrayList<Lehrer> mapList(){
+    private ArrayList<Lehrer> mapList(){
         ArrayList<Lehrer> mapList = new ArrayList<>();
         try{
-            Connection cn=db.connector.getConnection(aeprojekt.DBLogin.GetConnectstring(),aeprojekt.DBLogin.GetUser(),aeprojekt.DBLogin.GetPW());
+            Connection cn=db.connector.getConnection(DBLogin.GetConnectstring(),DBLogin.GetUser(),DBLogin.GetPW());
             String query1="SELECT * FROM lehrer";
             Statement st=cn.createStatement();
             ResultSet rs = st.executeQuery(query1);
@@ -55,6 +55,7 @@ public class UI extends javax.swing.JFrame {
         ArrayList<Lehrer> list = mapList();
         DefaultTableModel model = (DefaultTableModel)TableLehrer.getModel();
         Object[] row = new Object[3];
+        //Löscht alle Daten in der Tabelle, damit Einträge nicht mehrfach angezeigt werden, wenn man öfter auf den Knopf drückt
         if (model.getRowCount() > 0) {
             for (int i = model.getRowCount() - 1; i > -1; i--) {
                 model.removeRow(i);
