@@ -1,7 +1,3 @@
-## JDBC
-JDBC Driver wird benötigt! Download unter:
-https://dev.mysql.com/downloads/connector/j/
-
 ## Datenbank
 Datenbank muss vorher erstellt werden.
 ### Create Script:
